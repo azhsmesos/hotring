@@ -1,0 +1,1 @@
+# HotRing Java simple Implement
