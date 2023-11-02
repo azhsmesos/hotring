@@ -13,7 +13,7 @@ import com.hotring.HotHashMap;
  */
 public class HashMap_Benchmark {
 
-    private static final String inputfile = "/Users/zhaozhenhang/project/mq/hotring/src/test/resources/data/test3.data";
+    private static final String inputfile = "/Users/zhaozhenhang/project/mq/hotring/src/test/resources/data/test1.data";
 
     @Test
     public void testHashMap() throws Exception {

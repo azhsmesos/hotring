@@ -12,6 +12,7 @@ import org.junit.Test;
 /**
  * @author zhaozhenhang <zhaozhenhang@kuaishou.com>
  * Created on 2023-11-01
+ * 幂律分布
  */
 public class SaveRandomData {
 

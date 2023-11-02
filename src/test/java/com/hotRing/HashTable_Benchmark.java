@@ -14,7 +14,7 @@ import com.hotring.KHotRingCache;
  */
 public class HashTable_Benchmark {
 
-    private static final String inputfile = "/Users/zhaozhenhang/project/mq/hotring/src/test/resources/data/test3.data";
+    private static final String inputfile = "/Users/zhaozhenhang/project/mq/hotring/src/test/resources/data/test1.data";
 
     @Test
     public void test() throws Exception {

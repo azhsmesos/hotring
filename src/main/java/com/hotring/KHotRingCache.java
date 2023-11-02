@@ -2,6 +2,7 @@ package com.hotring;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.atomic.AtomicInteger;
 
 import org.apache.commons.lang3.StringUtils;
 
@@ -21,7 +22,7 @@ public class KHotRingCache implements HotRingCache<String, String, RingEntry> {
     private int sizeMask;
 
     // 用来记录访问次数r == R时，进行热点转移，R：访问次数
-    private int r;
+    private ThreadLocal<AtomicInteger> r;
 
     // 查询时比较
     private RingEntry compareItem;
@@ -55,6 +56,9 @@ public class KHotRingCache implements HotRingCache<String, String, RingEntry> {
         this.size = htsz;
         this.sizeMask = htsz - 1;
         this.compareItem = new RingEntry("", 0);
+        AtomicInteger n = new AtomicInteger(0);
+        this.r = new ThreadLocal<>();
+        this.r.set(n);
     }
 
     @Override
@@ -70,10 +74,10 @@ public class KHotRingCache implements HotRingCache<String, String, RingEntry> {
         this.compareItem.setKey(key);
         this.compareItem.setTag(tag);
 
-        ++this.r;
-        if (this.r == R) {
+        this.r.get().incrementAndGet();
+        if (this.r.get().intValue() == R) {
             hostSpotAware = true;
-            this.r = 0;
+            r.get().set(0);
         }
         ++this.findCnt;
         if (this.table.get(index) == null) { // 环中0项
@@ -112,6 +116,7 @@ public class KHotRingCache implements HotRingCache<String, String, RingEntry> {
 
     @Override
     public boolean insert(String key, String val) {
+        // todo 优化项，封装一个内部方法，返回entry时同时返回这个entry的位置，不然每次都得调用多次
         if (search(key) != null) {
             return false;
         }
