@@ -3,6 +3,7 @@ package com.hotring;
 /**
  * @author zhaozhenhang <zhaozhenhang@kuaishou.com>
  * Created on 2023-10-31
+ * 随机移动策略对象，后期会删除
  */
 public class RingEntry implements Comparable<RingEntry> {
 
