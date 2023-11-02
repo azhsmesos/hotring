@@ -3,6 +3,7 @@ package com.hotring;
 /**
  * @author zhaozhenhang <zhaozhenhang@kuaishou.com>
  * Created on 2023-11-02
+ * 使用地址的方式，和论文一致，结果java不支持，尝试过jni、unsafe、identityHashCode等都不行
  */
 public class RingEntryV2 {
 
