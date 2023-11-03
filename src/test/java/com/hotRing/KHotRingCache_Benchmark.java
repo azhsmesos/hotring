@@ -11,6 +11,7 @@ import java.util.Map.Entry;
 import org.junit.Test;
 
 import com.hotring.KHotRingCache;
+import com.hotring.KHotRingCacheV3;
 
 /**
  * @author zhaozhenhang <zhaozhenhang@kuaishou.com>
@@ -18,7 +19,7 @@ import com.hotring.KHotRingCache;
  */
 public class KHotRingCache_Benchmark {
 
-    private static final String inputfile = "/Users/zhaozhenhang/project/mq/hotring/src/test/resources/data/test1.data";
+    private static final String inputfile = "/Users/zhaozhenhang/project/mq/hotring/src/test/resources/data/test3.data";
 
     @Test
     public void test() throws Exception {
@@ -26,7 +27,7 @@ public class KHotRingCache_Benchmark {
         int M = 1000; // 根据具体情况设置 M 的值
         int N = 10000000;
 
-        KHotRingCache h = new KHotRingCache(M);
+        KHotRingCacheV3 h = new KHotRingCacheV3(M);
 
         for (int i = 0; i < M; ++i) {
             String[] values = input.readLine().trim().split("\\s+");

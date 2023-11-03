@@ -2,7 +2,6 @@ package com.hotring;
 
 
 import java.util.function.BiFunction;
-import java.util.function.Function;
 
 /**
  * @author zhaozhenhang <zhaozhenhang@kuaishou.com>

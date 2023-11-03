@@ -4,7 +4,7 @@ package com.hotring;
  * @author zhaozhenhang <zhaozhenhang@kuaishou.com>
  * Created on 2023-11-02
  */
-public class RingEntryV3 {
+public class RingEntryV3 implements   Comparable<RingEntryV3> {
 
     // Constants for bit positions
     private static final int ACTIVE_BIT = 0;
@@ -24,14 +24,25 @@ public class RingEntryV3 {
 
     private int tag;
 
-    private RingEntry next; // 指向下个哈希表节点，形成链表
+    private RingEntryV3 next; // 指向下个哈希表节点，形成链表
 
     private String key;
 
     private String val;
 
+    public RingEntryV3(String key, String val, RingEntryV3 next, int tag) {
+        this.key = key;
+        this.val = val;
+        this.next = next;
+        this.tag = tag;
+    }
+
     public RingEntryV3() {
-        this.meta = 0;
+        this("", "", null, 0);
+    }
+
+    public RingEntryV3(String key, int tag) {
+        this(key, "", null, tag);
     }
 
     public boolean active() {
@@ -81,13 +92,12 @@ public class RingEntryV3 {
         return (meta & mask) >>> TOTAL_COUNTER_START_BIT;
     }
 
-    public void incrTotalCounter() {
+    public void incrTotalCounter(int n) {
         int mask = ((1 << (TOTAL_COUNTER_END_BIT - TOTAL_COUNTER_START_BIT + 1)) - 1) << TOTAL_COUNTER_START_BIT;
         // clear the bits in the range
         meta &= ~mask;
         // set the bits to the new value
-        int totalCounter = totalCounter() + 1;
-        meta |= (totalCounter << TOTAL_COUNTER_START_BIT);
+        meta |= (n << TOTAL_COUNTER_START_BIT);
     }
 
     public void resetTotalCounter() {
@@ -104,17 +114,24 @@ public class RingEntryV3 {
     /**
      * mask会溢出
      */
-    public void incrCounter() {
-        long mask = ((1L << (COUNTER_END_BIT - COUNTER_START_BIT + 1)) - 1) << COUNTER_START_BIT;
-        meta &= ~mask;
-        int counter = counter() + 1;
-        meta |= (counter << COUNTER_START_BIT);
+    public void incrCounter(int n) {
+        long mask = ((1 << (COUNTER_END_BIT - COUNTER_START_BIT + 1)) - 1) << COUNTER_START_BIT;
+        meta &=  ~mask;
+        meta |= (n << COUNTER_START_BIT);
     }
 
     public void resetCounter() {
         long mask = ((1L << (COUNTER_END_BIT - COUNTER_START_BIT + 1)) - 1) << COUNTER_START_BIT;
         meta &= ~mask;
         meta |= 0;
+    }
+
+    @Override
+    public int compareTo(RingEntryV3 o) {
+        if (this.tag == o.getTag()) {
+            return this.key.compareTo(o.getKey());
+        }
+        return Integer.compare(this.tag, o.getTag());
     }
 
     public int getMeta() {
@@ -133,11 +150,11 @@ public class RingEntryV3 {
         this.tag = tag;
     }
 
-    public RingEntry getNext() {
+    public RingEntryV3 getNext() {
         return next;
     }
 
-    public void setNext(RingEntry next) {
+    public void setNext(RingEntryV3 next) {
         this.next = next;
     }
 

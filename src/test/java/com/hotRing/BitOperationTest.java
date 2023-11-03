@@ -154,16 +154,25 @@ public class BitOperationTest {
 
         System.out.println("=======totalCounter========");
         System.out.println(v3.totalCounter());
-        v3.incrTotalCounter();
+        v3.incrTotalCounter(10);
         System.out.println(v3.totalCounter());
         v3.resetTotalCounter();
         System.out.println(v3.totalCounter());
 
         System.out.println("=======counter========");
         System.out.println(v3.counter());
-        v3.incrCounter();
+        v3.incrCounter(10);
         System.out.println(v3.counter());
-        v3.incrCounter();
+        v3.incrCounter(20);
         System.out.println(v3.counter());
+        for (int i = 0; i < 100; i++) {
+            v3.incrCounter(i * 10);
+        }
+        System.out.println(v3.counter());
+    }
+
+    @Test
+    public void testMod() {
+        System.out.println(-4 % 5);
     }
 }
