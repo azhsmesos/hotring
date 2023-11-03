@@ -206,10 +206,6 @@ public class KHotRingCacheV3 implements HotRingCache<String, String, RingEntryV3
         double maxVal = Double.MAX_VALUE;
         // 保证不匹配遍历整个环，不过得确认下极端情况是否会存在这个值
         RingEntryV3 compareItem = new RingEntryV3("", "", null, Integer.MAX_VALUE);
-        BiFunction<RingEntryV3, Integer, Double> calculation = (item, totalCounter) -> {
-            // todo 计算权重公式 太复杂先简单这么做
-            return (double) item.counter() / totalCounter;
-        };
         if (headItem == next) { // 只有一项，直接返回
             return;
         }
@@ -233,6 +229,11 @@ public class KHotRingCacheV3 implements HotRingCache<String, String, RingEntryV3
         }
         this.table.set(index, newHeadItem);
     }
+
+    BiFunction<RingEntryV3, Integer, Double> calculation = (item, totalCounter) -> {
+        // todo 计算权重公式 太复杂先简单这么做
+        return (double) item.counter() / totalCounter;
+    };
 
     public int getFindCnt() {
         return findCnt;
